@@ -9,9 +9,10 @@ Output Example:
 
 >/c/Users/dasdh/OneDrive/Linux_Lab
 
-## ls command
+## ls flags
+### ls commands
 
-The ls command in linux allows to view all the files and folders in current working directory.
+The ls command in linux allows to view all the files and folders in current working directory.Flag -a list down all file and folder including the one which are hidden
 
 Output: 
 
@@ -24,6 +25,4 @@ Output Example:
 ### 2. ls -la command
 #### Image Snap Shot:
 ![alt text](image-2.png)
-
-
 
