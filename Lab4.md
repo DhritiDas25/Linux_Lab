@@ -6,5 +6,6 @@ In the parent folder we created a text file data.txt which we copied it to the c
 
 These are the commands for performing the above experiment.
 
+# Image Snapshot: 
 ![alt text](14825-1.png)
 
