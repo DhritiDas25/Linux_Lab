@@ -14,7 +14,8 @@ Output Example:
 ## ls flags
 ### ls commands
 ```
-The ls command in linux allows to view all the files and folders in current working directory.Flag -a list down all file and folder including the one which are hidden
+The ls command in linux allows to view all the files and folders in current working directory.
+Flag -a list down all file and folder including the one which are hidden
 ```
 ### ls
 Output: 
@@ -29,5 +30,5 @@ Output Example:
 ```
 
 ### ls -la command
-#### Image Snap Shot:
+#### 📌Image Snap Shot:
 ![alt text](image-2.png)
