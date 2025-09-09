@@ -47,7 +47,7 @@
 
 ![alt text](image-16.png)
 
-### **```nano LINUX1.txt```**: It is a basic termibal based text editor. It open the specified file and the terminal clears up and Nano editor interface will appear. You will be able to code in the editor.
+### **```nano LINUX1.txt```**: It is a basic termibal based text editor. It opens the specified file and the terminal clears up and Nano editor interface will appear. You will be able to code in the editor.
 
 ![alt text](image-4.png)
 
