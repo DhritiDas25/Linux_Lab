@@ -9,7 +9,8 @@
 
 ![alt text](image-35.png)
 
-### 🔸After enhancing the program the user can input start, end and step values.
+### 🔸Before modifying the program user input was invalid. Range was already specified.
+### 🔸After modifying the program the user can input start, end and step values.
 ### 🔸The older script ```5_script.sh``` has been saved as ```enhanced_numbers.sh```.
 ### The program is as follows:
 
