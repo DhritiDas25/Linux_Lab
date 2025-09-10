@@ -1,7 +1,7 @@
 # Assignment 4: File and Backup Automation
 ## Objective: Automate file management.
 
-### First I created a backup.sh script then wrote the code in it.
+### First I created a ```backup.sh``` script then wrote the code in it.
 ![alt text](<Screenshot 2025-09-10 180914.png>)
 
 ### 📷Image Snapshot of the Code:
