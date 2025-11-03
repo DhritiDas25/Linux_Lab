@@ -120,8 +120,8 @@ pid 3050's current affinity list: 1
 ```
 # 📷Image Snapshot:
 ![alt text](image-59.png)
-### Since my CPU has only 1 core, i.e. 0, the command given above will fail. Hence the reason why I am restricting it to core 0 only.
-### You can check how many cpu cores you have by using the ```lscpu``` command.
+### 🔸Since my CPU has only 1 core, i.e. 0, the command given above will fail. Hence the reason why I am restricting it to core 0 only.
+### 🔸You can check how many cpu cores you have by using the ```lscpu``` command.
 
 # 📂 6. I/O Scheduling Priority
 ## Command:
@@ -205,7 +205,8 @@ Linux 5.15.0 (ubuntu)   09/25/25        _x86_64_        (4 CPU)
 ```bash
 sudo cgcreate -g cpu,memory:/testgroup
 ```
-### This will create a new cgroup named ```/testgroup``` under both the ```cpu``` and ```memory``` subsystems.
+### 🔸This will create a new cgroup named ```/testgroup``` under both the ```cpu``` and ```memory``` subsystems.
+### 🔸To execute the above, you need to download `cgroup tools`.
 
 ## Limit CPU and Memory:
 ```bash
@@ -237,8 +238,11 @@ chrt -p <pid>
 ```
 ### 🔸This command displays the current scheduling policy and priority of a running process.
 
-### Image Snapshot:
+### 📸Image Snapshot:
 ![alt text](image-61.png)
+
+### 📸Image Snapshot:
+![alt text](image-64.png)
 
 ## 2. ionice (I/O Priority Control)
 ### The command:
@@ -247,6 +251,10 @@ ionice -c 2 -n 7 tar -czf backup.tar.gz /home
 ```
 ### 🔸It runs the `tar` command (which mankes a compressed backup of `/home`), but with low disk I/O priority.
 
+### 📸Image Snapshot:
+![alt text](image-62.png)
+![alt text](image-63.png)
+
 ## 3. taskset (CPU Affinity)
 ### The command:
 ```bash
@@ -254,6 +262,10 @@ taskset -c 1 firefox
 ```
 ### 🔸Firefox will only execute on CPU core 1, never switching to other cores.
 ### 🔸If the command was successfull it will not give any output.
+### 🔸If it shows any informational warning about not loading the atk-bridge module because its functionality is already provided by GTK.
+
+### 📸Image Snapshot:
+![alt text](image-65.png)
 
 ## 4. Control Groups (cgroups)
 ### The command:
@@ -264,6 +276,9 @@ echo 200M | sudo tee /sys/fs/cgroup/memory/lowprio/memory.limit_in_bytes
 echo 1234 | sudo tee /sys/fs/cgroup/cpu/lowprio/cgroup.procs
 ```
 ### 🔸This creates a control group (cgroup) called `lowprio` and applies CPU and memory limits to it.
+### ⚠️This is safe only if the pid being used is a test or non-critical process.
+### ⚠️If it is a PID given by the system, it may slow down or even crash under resource pressure.
+### 🟡Better to **avoid running it.**
 
 ## 5. systemd-run
 ### The command:
@@ -271,6 +286,8 @@ echo 1234 | sudo tee /sys/fs/cgroup/cpu/lowprio/cgroup.procs
 systemd-run --scope -p CPUweight=200 stress --cpu 4
 ```
 ### 🔸Runs a command under a transient systemd scope with specific resource weights.
+### ⚠️The `stress` tool will consume CPU resources while running. It is safe for testing but will slow other tasks temporarily.
+### 🟡Better to **avoid running it.**
 
 ## 6. schedtool
 ### The command:
@@ -278,6 +295,9 @@ systemd-run --scope -p CPUweight=200 stress --cpu 4
 sudo schedtool -R -p 10 <pid>
 ```
 ### 🔸Changes the CPU scheduling policy and priority of a running process.
+### ⚠️Real time scheduling can be dangerous if applied to the wrong process. It can monopolize CPU time and make your system unresponsive.
+### ⚠️Always keep a terminal open to revert it or reboot if the system locks up.
+### 🟡Better to **avoid running it.**
 
 ## Summary Table
 | Tool | Focus | Alternative to |
