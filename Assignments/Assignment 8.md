@@ -96,7 +96,7 @@ vncser :1
 ```bash
 ssh -L 5901:localhost:5901 -p 22 frienduser@FRIEND_IP -N &
 ```
-### **Here 5901 is a port.**
+### **🔸Here 5901 is a port.**
 
 ### 🔸It'll ask for the friend's password.
 ### 📸Image Snapshot:
