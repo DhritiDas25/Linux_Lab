@@ -149,7 +149,9 @@ lsof -p 3050 | head -5
 ```
 ### Example Output:
 ```bash
-COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAMEsleep   3050 vibhu  cwd  DIR  253,0     4096  131073 /home/vibhusleep   3050 vibhu  rtd  DIR  253,0     4096       2 /
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAMEsleep   3050 vibhu  cwd  DIR  253,0     
+4096  131073 /home/vibhusleep   3050 vibhu  rtd  
+DIR  253,0     4096       2 /
 sleep   3050 vibhu  txt  REG  253,0    17520  133580 /usr/bin/sleep
 ```
 # 📷Image Snapshot:
@@ -162,7 +164,8 @@ strace -p 3050
 ```
 ### Example Output:
 ```bash
-strace: Process 3050 attachedrestart_syscall(<... resuming interrupted nanosleep ...>) = 0nanosleep({tv_sec=300, tv_nsec=0}, 0x7ffd4a60d8b0) = ? ERESTART_RESTARTBLOCK (Interrupted by signal)
+strace: Process 3050 attachedrestart_syscall(<... resuming interrupted nanosleep ...>) = 
+0nanosleep({tv_sec=300, tv_nsec=0}, 0x7ffd4a60d8b0) = ? ERESTART_RESTARTBLOCK (Interrupted by signal)
 ```
 
 **👉 Great for debugging system calls and process behaviour.**
@@ -197,7 +200,10 @@ pidstat -p 3050 2 3
 ### Example Output:
 ```bash
 Linux 5.15.0 (ubuntu)   09/25/25        _x86_64_        (4 CPU)
-12:30:20      UID       PID    %usr %system  %CPU   CPU  Command12:30:22     1000      3050    0.00    0.00   0.00     1  sleep12:30:24     1000      3050    0.00    0.00   0.00     1  sleep12:30:26     1000      3050    0.00    0.00   0.00     1  sleep
+12:30:20      UID       PID    %usr %system  %CPU   CPU  Command12:30:22     
+1000      3050    0.00    0.00   0.00     1  sleep12:30:24     1000      
+3050    0.00    0.00   0.00     1  sleep12:30:26     1000      3050    
+0.00    0.00   0.00     1  sleep
 ```
 **👉 Shows CPU usage every 2 seconds, 3 times.**
 ### 📷Image Snapshot:
@@ -213,7 +219,7 @@ sudo cgcreate -g cpu,memory:/testgroup
 
 ## Limit CPU and Memory:
 ```bash
-echo 50000 | sudo tee /sys/fs/cgroup/cpu/testgroup/cpu.cfs_quota_usecho 100M   | sudo tee /sys/fs/cgroup/memory/testgroup/memory.limit_in_bytes
+echo 50000 | sudo tee /sys/fs/cgroup/cpu/testgroup/cpu.cfs_quota_usecho 100M  | sudo tee /sys/fs/cgroup/memory/testgroup/memory.limit_in_bytes
 ```
 ### Here the processes in `testgroup` can use at most 50% of one CPU core.
 
@@ -222,7 +228,8 @@ echo 50000 | sudo tee /sys/fs/cgroup/cpu/testgroup/cpu.cfs_quota_usecho 100M   |
 echo 3050 | sudo tee /sys/fs/cgroup/cpu/testgroup/cgroup.procs
  ```
 
-### Here the `cgroup` is limited to 100 MB of RAM. Basically the processes in `cgroup` cannot use more than 100 MB of memory.
+### 🔸Here the `cgroup` is limited to 100 MB of RAM. 
+### 🔸Basically the processes in `cgroup` cannot use more than 100 MB of memory.
 
 # 🤭12. Alternatives to `nice/renice`
 
