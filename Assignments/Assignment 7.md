@@ -1,4 +1,4 @@
-# LAB 6
+# Assignment 7
 
 # 👷🏻‍♀️1. aux commands
 ```bash
@@ -27,7 +27,9 @@ USER       PID  %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMANDroot   
 
 # 🌳 2. Process Tree
 ## Command:
-```pstree -p```
+```bash
+pstree -p
+```
 ### Example Output:
 ```bash
 systemd(1)─┬─NetworkManager(778)
@@ -42,7 +44,9 @@ systemd(1)─┬─NetworkManager(778)
 
 # 👩🏼‍💻3. Real-Time Monitoring
 ## Command:
-```top```
+```bash
+top
+```
 ### Example Output (partial):
 ```bash
 top - 10:20:51 up 2 days,  3:12,  2 users,  load average: 0.22, 0.33, 0.45
@@ -59,47 +63,75 @@ PID   USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
 
 # 🧐 4. Adjust Process Priority
 ## Start a process with low priority:
-```nice -n 10 sleep 300 &```
+```bash
+nice -n 10 sleep 300 &
+```
 ### Output:
-```[1] 3050```
+```bash
+[1] 3050
+```
 
 **👉 PID = 3050 is running in background with nice value 10.**
 # 📷Image Snapshot:
 ![alt text](image-50.png)
 ## Change priority of running process:
-```renice -n -5 -p 3050```
+```bash
+renice -n -5 -p 3050
+```
 ### Output:
-```3050 (process ID) old priority 10, new priority -5```
+```bash
+3050 (process ID) old priority 10, new priority -5
+```
 
 **👉 Now process runs with higher priority.**
 ## If it shows 'PERMISSION DENIED' then run the command as:
-```sudo renice -n -5 -p 3050```
+```bash 
+sudo renice -n -5 -p 3050
+```
 
 **👉It will ask for your password.**
 ### Output:
-```3050 (process ID) old priority 10, new priority -5```
+```bash 
+3050 (process ID) old priority 10, new priority -5
+```
 # 📷Image Snapshot:
 ![alt text](image-51.png)
 
 # 🖥️ 5. CPU Affinity (Bind Process to CPU Core)
 ## Command:
-```taskset -cp 3050```
+```bash
+taskset -cp 3050
+```
 ### Example Output:
-```pid 3050's current affinity list: 0-3```
+```bash
+pid 3050's current affinity list: 0-3
+```
 
 **👉 Shows process is allowed on cores 0,1,2,3.**
 # 📷Image Snapshot:
 ![alt text](image-52.png)
 ## Restrict to core 1 only:
-```taskset -cp 1 3050```
+```bash 
+taskset -cp 1 3050
+```
 ### Output:
-```pid 3050's current affinity list: 1```
+```bash 
+pid 3050's current affinity list: 1
+```
+# 📷Image Snapshot:
+![alt text](image-59.png)
+### Since my CPU has only 1 core, i.e. 0, the command given above will fail. Hence the reason why I am restricting it to core 0 only.
+### You can check how many cpu cores you have by using the ```lscpu``` command.
 
 # 📂 6. I/O Scheduling Priority
 ## Command:
-```ionice -c 3 -p 3050```
+```bash 
+ionice -c 3 -p 3050
+```
 ### Output:
-```successfully set pid 3050's IO scheduling class to idle```
+```bash 
+successfully set pid 3050's IO scheduling class to idle
+```
 # 📷Image Snapshot:
 ![alt text](image-53.png)
 
@@ -109,7 +141,9 @@ PID   USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
 
 # 📜 7. File Descriptors Used by a Process
 ## Command:
-```lsof -p 3050 | head -5```
+```bash 
+lsof -p 3050 | head -5
+```
 ### Example Output:
 ```bash
 COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAMEsleep   3050 vibhu  cwd  DIR  253,0     4096  131073 /home/vibhusleep   3050 vibhu  rtd  DIR  253,0     4096       2 /
@@ -120,22 +154,28 @@ sleep   3050 vibhu  txt  REG  253,0    17520  133580 /usr/bin/sleep
 
 # 📞 8. Trace System Calls of a Process
 ## Command:
-```strace -p 3050```
+```bash
+strace -p 3050
+```
 ### Example Output:
 ```bash
 strace: Process 3050 attachedrestart_syscall(<... resuming interrupted nanosleep ...>) = 0nanosleep({tv_sec=300, tv_nsec=0}, 0x7ffd4a60d8b0) = ? ERESTART_RESTARTBLOCK (Interrupted by signal)
 ```
 
-**👉 Great for debugging.**
+**👉 Great for debugging system calls and process behaviour.**
 
 # 📷Image Snapshot:
 ![alt text](image-55.png)
 
 # 📡 9. Find Process Using a Port
 ## Command:
-```sudo fuser -n tcp 8080```
+```bash 
+sudo fuser -n tcp 8080
+```
 ### Output:
-```8080/tcp:           4321```
+```bash 
+8080/tcp:           4321
+```
 
 **👉 PID 4321 is using port 8080.**
 
@@ -144,9 +184,13 @@ strace: Process 3050 attachedrestart_syscall(<... resuming interrupted nanosleep
 # 📷Image Snapshot:
 ![alt text](image-56.png)
 
+![alt text](image-60.png)
+
 # 📊 10. Per-Process Statistics
 ## Command:
-```pidstat -p 3050 2 3```
+```bash 
+pidstat -p 3050 2 3
+```
 ### Example Output:
 ```bash
 Linux 5.15.0 (ubuntu)   09/25/25        _x86_64_        (4 CPU)
@@ -158,12 +202,89 @@ Linux 5.15.0 (ubuntu)   09/25/25        _x86_64_        (4 CPU)
 
 # 🔐 11. Control Groups (cgroups) for Resource Limits
 ## Create a new cgroup:
-```sudo cgcreate -g cpu,memory:/testgroup```
+```bash
+sudo cgcreate -g cpu,memory:/testgroup
+```
+### This will create a new cgroup named ```/testgroup``` under both the ```cpu``` and ```memory``` subsystems.
+
 ## Limit CPU and Memory:
 ```bash
 echo 50000 | sudo tee /sys/fs/cgroup/cpu/testgroup/cpu.cfs_quota_usecho 100M   | sudo tee /sys/fs/cgroup/memory/testgroup/memory.limit_in_bytes
 ```
+### Here the processes in `testgroup` can use at most 50% of one CPU core.
+
 ## Add a process (PID 3050) to cgroup:
-````
+```bash
 echo 3050 | sudo tee /sys/fs/cgroup/cpu/testgroup/cgroup.procs
  ```
+
+### Here the `cgroup` is limited to 100 MB of RAM. Basically the processes in `cgroup` cannot use more than 100 MB of memory.
+
+# 🤭12. Alternatives to `nice/renice`
+
+## 1. chrt (Real-Time Schedulig)
+### 🔸Set real-time scheduling policies (FIFO or Round Robbin).
+
+### The commands:
+```bash
+sudo chrt -f 50 sleep 1000
+```
+### 🔸It will give no output. It runs `sleep` for 1000 seconds.
+### 🔸Your terminal will wait for `sleep` to finish.
+
+```bash
+chrt -p <pid>
+```
+### 🔸This command displays the current scheduling policy and priority of a running process.
+
+### Image Snapshot:
+![alt text](image-61.png)
+
+## 2. ionice (I/O Priority Control)
+### The command:
+```bash
+ionice -c 2 -n 7 tar -czf backup.tar.gz /home
+```
+### 🔸It runs the `tar` command (which mankes a compressed backup of `/home`), but with low disk I/O priority.
+
+## 3. taskset (CPU Affinity)
+### The command:
+```bash
+taskset -c 1 firefox
+```
+### 🔸Firefox will only execute on CPU core 1, never switching to other cores.
+### 🔸If the command was successfull it will not give any output.
+
+## 4. Control Groups (cgroups)
+### The command:
+```bash
+sudo cgcreate -g cpu,memory:/lowprio
+echo 20000 | sudo tee /sys/fs/cgroup/cpu/lowprio/cpu.cfs_quota_us
+echo 200M | sudo tee /sys/fs/cgroup/memory/lowprio/memory.limit_in_bytes
+echo 1234 | sudo tee /sys/fs/cgroup/cpu/lowprio/cgroup.procs
+```
+### 🔸This creates a control group (cgroup) called `lowprio` and applies CPU and memory limits to it.
+
+## 5. systemd-run
+### The command:
+```bash
+systemd-run --scope -p CPUweight=200 stress --cpu 4
+```
+### 🔸Runs a command under a transient systemd scope with specific resource weights.
+
+## 6. schedtool
+### The command:
+```bash
+sudo schedtool -R -p 10 <pid>
+```
+### 🔸Changes the CPU scheduling policy and priority of a running process.
+
+## Summary Table
+| Tool | Focus | Alternative to |
+| :--: | :---: | :----: |
+| chrt | Real time scheduling policies| nice |
+| ionice | I/O priority control | (complementary) |
+| taskset | CPU affinity control | (complementary) |
+| cgroups | File-grained resource management | nice (more powerful) |
+| systemd-run | systemd+cgroups resource management | nice |
+| schedtool | Custom scheduling policies | nice |
