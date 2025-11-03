@@ -88,7 +88,7 @@ sudo apt install tigervnc-standalone-server
 ```bash
 vncser :1
 ```
-### It will ask to set atleast a 6 characters password and verify it.
+### 🔸It will ask to set atleast 6 characters password and verify it.
 ### 📸Image Snapshot:
 ![alt text](<WhatsApp Image 2025-11-03 at 22.45.03_1cc31fd6.jpg>)
 
