@@ -13,7 +13,10 @@ x → show processes not attached to a terminal
 
 ## Example Output:
 ```bash
-USER       PID  %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMANDroot         1  0.0  0.1 167500  1100 ?        Ss   Sep25   0:05 /sbin/initvibhu     1234  1.2  1.5 274532 15632 ?        Sl   10:15   0:12 /usr/bin/python3 script.pymysql     2001  0.5  2.0 450000 20988 ?        Ssl  Sep25   1:02 /usr/sbin/mysqld
+USER       PID  %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMANDroot         
+1  0.0  0.1 167500  1100 ?        Ss   Sep25   0:05 /sbin/initvibhu     
+1234  1.2  1.5 274532 15632 ?        Sl   10:15   0:12 /usr/bin/python3 script.pymysql     
+2001  0.5  2.0 450000 20988 ?        Ssl  Sep25   1:02 /usr/sbin/mysqld
 ```
 # 📷Image Snapshots:
 ```ps aux:```
